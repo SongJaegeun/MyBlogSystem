@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block container %}
+    <div class="container">
+        <h1>새글 작성</h1>
+        <form method="post">
+            {% csrf_token %}
+            {% bootstrap_form post_form %}
+            <button class='btn btn-primary' type="submit">작성</button>
+        </form>
+
+    </div>
+
+{% endblock %}

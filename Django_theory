@@ -1,0 +1,177 @@
+- Django
+: Python_으로 만들어진 오픈소스
+  웹어플리케이션을 쉽게 작성할 수 있도록 도와주는 'Framework'
+
+
+- Library, Framework
+1. 라이브러리(library): 특수한 처리를 하기 위해서 만들어 놓은 함수 집합 (jQuery.....)
+   장점: 프로그래밍의 작성이 용이
+   단점: 전체 프로그램의 로직을 담당 X
+   (ex: jQuery_를 이용해서 영화정보를 출력하는 문제를 구현할 때 구현 방식이 상이)
+
+2. 프레임워크(Framework): 프로그램의 전체적인 로직(구조)이 이미 구현
+                        따라서, 기본적인 코드가 제공(scaffolding)
+   장점: 유지보수가 용이
+   단점: 동작원리에 대한 이해가 필요
+
+- Django_를 이용하면 웹 어플리케이션 구현이 용이
+- Django 특징
+  1. 장고는 MVC Model 기반 MVT Model
+     MVC Model: M(model), V(view), C(controller)
+     MVT Model: M(model), V(view), T(template)
+         => Model: 데이터 베이스 처리
+            View: 로직 담당(프로세스 처리) -> controller_의 역할 담당
+            Template: 화면 담당
+  2. 관리자 화면을 기본으로 제공
+     관리자에 대한 ID, PW 존재(Database 저장)
+     따라서 Django_는 기본적으로 데이터베이스가 설정이 된 상태로 사용
+     => 기본테이블 생성 필요
+        python manage.py migrate(데이터베이스 생성)
+
+=============================================================================================
+# Django_를 이용한 웹어플리케이션 구현
+
+1. Django 설치
+    => Dos_창 pip(python install package)를 통해 설치
+    => PyPI(Python Package Index) repository_에 존재
+    => pip install Django
+
+2. Project Setup
+    => 프로젝트의 기본 구조 작성
+    => C:/python-Django 폴더 생성
+    => scaffolding 명령어(django-admin startproject '프로젝트명')
+       경로: C:/python-Django/MyFirstWebPoll/mysite
+       application 생성: python manage.py startapp polls
+    => Pycharm_을 이용하여 처리
+
+#  Project: 전체 웹프로그래밍
+   Application: 구현하는 단위 조각
+
+3. settings.py를 통해 프로젝트의 설정 처리
+4. 서버 기동(deploy, 내장된 테스트서버)
+   => python manage.py runserver
+   => http://localhost:8000
+   => http://localhost:8000/admin : 관리자모드
+   => 관리자 ID/PW 생성
+      python manage.py createsuperuser
+
+5. Polls application 예제 구현
+   (1) Model 생성
+       Database: 정제된 데이터의 집합체를 통칭
+       DBMS(Database Management System)
+       => 정보 추출, 데이터 관리(입력, 삭제, 수정) 작업프로그램
+       => sqlite3: Django default DBMS
+       => 계층형 데이터베이스 -> 관계형 데이터베이스(테이블 구조)
+          -> 객체관계형 데이터베이스(대표적으로 Oracle)
+   # 모델 작업: Database Table 생성 작업
+        - models 생성 -> Class 생성
+        - admin 등록 -> admin.site.register('클래스명')
+        - In Terminal: python manage.py makemigrations (모델에 맞는 테이블 생성)
+                       python manage.py migrate
+
+===================================================================================
+==> 1. python_을 이용해서 Web Application 구현
+        - Django, Flask
+        - pip install Django
+
+    2. Django(프레임워크)
+        => 프로젝트의 기본 구조 작성
+        => C:/python-Django 폴더 생성
+        => scaffolding 명령어(django-admin startproject '프로젝트명')
+        => application 생성: python manage.py startapp polls
+
+    3. 프로젝트 설정
+        => 프로젝트 폴더안에 있는 settings.py 파일에서 설정
+        => ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+        => INSTALLED_APPS 등록
+            '어플리케이션.apps.내부클래스'
+            ex) 'polls.apps.PollsConfig'
+        => TIME_ZONE = 'Asia/Seoul'
+
+    4. 데이터베이스 생성
+        => python manage.py migrate (데이터베이스 기본 설정에 users, groups 테이블이 포함)
+        => 관리자 계정: python manage.py createsuperuser
+
+    5. 서버기동 확인
+        => python manage.py runserver
+
+    6. 세부 어플리케이션 구현
+        => polls application 구현
+            1) Model 작업 (해당 어플리케이션에서 사용할 데이터베이스 구조)
+                ORM(Object Relation Mapping): class_를 이용하여 table_을 표현
+                1-1) 어플리케이션>models.py class 작성(상속: models.Model)
+                1-2) 어플리케이션>admin.py class 등록(admin.site.register('클래스명'))
+                1-3) class_와 매핑되는 테이블을 만들기 위해 필요한
+                    SQL_구문 생성(python manage.py makemigrations)
+                    및 실행(python manage.py migrate)
+                1-4) admin 페이지를 이용하여 데이터베이스 추가
+
+            2) URL 설정(계층 구조로 설정)
+                2-1) my_polls>urls> path 추가(path('polls/', include('polls.urls')))
+                2-2) polls>urls 에서 view 작업(path('', views.index, name='index'))
+                    : 리퀘스트 처리 경로 설정
+                2-3) views.py>index 함수 생성(request, html, context 반환)
+                2-4) index.html 구현
+
+-----------------------------------------------------------------------------------------------
+ModelForm_을 이용한 CRUD 구현 + Bootstrap
+- CRUD(Create, Read, Update, Delete)
+
+    1. 필요 패키지 설치
+        1-1. pip install Django
+        1-2. bootstrap 관련 package (ModelForm 사용 시 필요)
+            -> 일반 HTML: Bootstrap CDN + 태그, 속성
+            -> ModelForm: 사용자 입력양식이 자동으로 생성되어 Bootstrap 적용 X
+            -> pip install Django-bootstrap4
+
+    2. Project 생성
+        Django framework -> scaffolding 기능 제공
+        2-1. 프로젝트 생성(blog)
+        2-2. 어플리케이션 생성(posts)
+
+    3. Project 설정
+        프로젝트 폴더안에 있는 settings.py 파일에서 설정
+        3-1. ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+        3-2. INSTALLED_APPS 등록
+            '어플리케이션.apps.내부클래스'
+            ex) 'polls.apps.PollsConfig'
+            Bootstrap 이용시: 'bootstrap4' 추가
+        3-3. TIME_ZONE = 'Asia/Seoul'
+        3-4. TEMPLATES: 'DIRS': [os.path.join(BASE_DIR, 'blog', 'templates')] 추가
+        3-5. STATIC_URL 이후 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+              # static 폴더를 이용하면 정적 리소스파일을 access 할 수 있음
+    4. 데이터베이스 생성
+        4-1. python manage.py migrate (데이터베이스 기본 설정에 users, groups 테이블이 포함)
+        4-2. 관리자 계정: python manage.py createsuperuser
+
+    5. 어플리케이션 구현
+        5-1. Model 작업
+                ORM(Object Relation Mapping): class_를 이용하여 table_을 표현
+                1) 어플리케이션>models.py class 작성(상속: models.Model)
+                2) 어플리케이션>admin.py class 등록(admin.site.register('클래스명'))
+                3) class_와 매핑되는 테이블을 만들기 위해 필요한
+                    SQL_구문 생성(python manage.py makemigrations)
+                    및 실행(python manage.py migrate)
+                4) admin 페이지를 이용하여 데이터베이스 추가
+
+        5-2. URL 작업
+                1) my_polls>urls> path 추가(path('posts/', include('posts.urls')))
+                2) posts>urls 에서 view 작업(path('', views.index, name='index'))
+                    : 리퀘스트 처리 경로 설정
+                3) base template html_을 blog project>templates_에 생성
+                4) views.py>index 함수 생성(request, html, context 반환)
+                5) index.html 구현
+
+            # ModelForm 생성
+            : 사용자 입력양식을 직접 HTML template_안에 입력하는게 아닌
+              Model_을 기반으로 사용자 입력양식을 자동으로 생성 가능하게 해주는 작업
+                1) forms.py>Class 작성
+
+        5-3. View 작업
+        5-4. Template 작업
+            : create field
+
+
+
+
+
