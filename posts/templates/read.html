@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block container %}
+    <div class="container">
+        <h1>제목: {{post.title}}</h1>
+        <a href="/posts/list/" class="btn btn-secondary">목록</a>
+        <div class="m-1"></div>
+
+            <tr>
+                <th>
+                    <label for="id_author">작성자:</label>
+                </th>
+                <td>
+                    <input class='form-control' type="text" name="author" value="송재근" maxlength="20" required id="id_author" disabled>
+                </td>
+            </tr>
+
+
+            <br>
+            <tr>
+                <th>
+                    <label for="id_contents">본문</label>
+                </th>
+                <br>
+                <td>
+                    <textarea class='form-control' name="contents" cols="40" rows="10" maxlength="1000" required id="id_contents" disabled>{{post.contents}}</textarea>
+                </td>
+            </tr>
+            <div class="m-1"></div>
+            <a href="{% url 'posts:update2' post.id %}" class="btn btn-primary">수정</a>
+            <a href="{% url 'posts:delete' post.id %}" class="btn btn-danger">삭제</a>
+            <div class="m-1"></div>
+            <table class="table table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col" width="5%">#</th>
+                        <th scope="col" width="60%">댓글</th>
+                        <th scope="col" width="10%">작성자</th>
+                        <th scope="col" width="7%">  삭제</th>
+                    </tr>
+
+                </thead>
+                <tbody>
+
+                    {% for comment in post.comment_set.all %}
+                    <tr>
+                        <th scope="row">{{forloop.counter}}</th>
+                        <td>
+                            {{ comment.comments }}
+                        </td>
+                        <td>{{ post.author }}</td>
+
+                        <td>
+                            <a href="{% url 'posts:c_delete' post.id comment.id %}" class="btn btn-danger">삭제</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <br>
+            <br>
+            <h3>댓글 달기</h3>
+            <form method="post">
+                {% csrf_token %}
+                {% bootstrap_form comment_form %}
+                <button class='btn btn-primary' type="submit">작성</button>
+            </form>
+
+
+
+
+    </div>
+
+{% endblock %}
