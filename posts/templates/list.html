@@ -10,20 +10,23 @@
         <table class="table table-hover">
             <thead class="thead-dark">
                 <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">작성자</th>
-                    <th scope="col">내용</th>
-                    <th scope="col">수정</th>
-                    <th scope="col">삭제</th>
+                    <th scope="col" width="5%">#</th>
+                    <th scope="col" width="10%">작성자</th>
+                    <th scope="col" width="60%">제목</th>
+                    <th scope="col" width="7%">수정</th>
+                    <th scope="col" width="7%">삭제</th>
                 </tr>
 
             </thead>
             <tbody>
                 {% for post in posts %}
                 <tr>
-                    <th scope="row">{{ post.id }}</th>
+                    <th scope="row">{{ forloop.counter }}</th>
                     <td>{{ post.author }}</td>
-                    <td>{{ post.contents }}</td>
+                    <td>
+                        <a href="{% url 'posts:read' post.id %}"><div>{{ post.title }}</div></a>
+
+                    </td>
                     <td>
                         <a href="{% url 'posts:update' post.id %}" class="btn btn-primary">수정</a>
                     </td>
