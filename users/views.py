@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
@@ -49,4 +49,8 @@ def log_out(request):
 
 @login_required
 def mypage(request):
-    return render(request, 'mypage.html')
+    session = request.session['user']
+    print(session)
+    user = get_object_or_404(User, username=session)
+
+    return render(request, 'mypage.html', {'user': user})
