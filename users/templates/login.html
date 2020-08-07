@@ -15,31 +15,28 @@
     <link href="/static/css/cover.css" rel="stylesheet">
   </head>
   <body class="text-center">
+  {% load bootstrap4 %}
     <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
   <header class="masthead mb-auto">
     <div class="inner">
       <h3 class="masthead-brand">Song Blog</h3>
-      {% if user.is_authenticated %}
-          <div align="right">
-            <a href="/users/mypage/">Mypage</a>&nbsp;&nbsp;<a href="/users/logout/">Logout</a>
-          </div>
-      {% else %}
-          <div align="right">
-            <a href="/users/login/">Login</a>&nbsp;&nbsp;<a href="/users/join/">join</a>
-          </div>
-      {% endif %}
+
+      <div align="right">
+        <a href="/users/login/">Login</a>&nbsp;&nbsp;<a href="/users/join/">join</a>
+      </div>
+
     </div>
   </header>
 
   <main role="main" class="inner cover">
     <h1 class="cover-heading">Welcome</h1>
-    {% if user.is_authenticated %}
-      <p class="lead"></p>
-    {% else %}
-      <p class="lead">Please Login To use BBS</p>
-    {% endif %}
+    <p class="lead">Please Login</p>
     <p class="lead">
-      <a href="/posts/list/" class="btn btn-lg btn-secondary">Enter BBS</a>
+      <form method="post">
+            {% csrf_token %}
+            {% bootstrap_form login_form %}
+            <button class='btn btn-primary' type="submit">Login</button>
+      </form>
     </p>
   </main>
 

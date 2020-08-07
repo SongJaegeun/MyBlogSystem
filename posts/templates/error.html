@@ -32,14 +32,10 @@
   </header>
 
   <main role="main" class="inner cover">
-    <h1 class="cover-heading">Welcome</h1>
-    {% if user.is_authenticated %}
-      <p class="lead"></p>
-    {% else %}
-      <p class="lead">Please Login To use BBS</p>
-    {% endif %}
+    <h1 class="cover-heading">Please Login</h1>
+
     <p class="lead">
-      <a href="/posts/list/" class="btn btn-lg btn-secondary">Enter BBS</a>
+      <a href="/" class="btn btn-lg btn-secondary">Back</a>
     </p>
   </main>
 

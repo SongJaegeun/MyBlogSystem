@@ -11,7 +11,7 @@
                     <label for="id_author">작성자:</label>
                 </th>
                 <td>
-                    <input class='form-control' type="text" name="author" value="송재근" maxlength="20" required id="id_author" disabled>
+                    <input class='form-control' type="text" name="author" value="{{post.author}}" maxlength="20" required id="id_author" disabled>
                 </td>
             </tr>
 
@@ -27,8 +27,10 @@
                 </td>
             </tr>
             <div class="m-1"></div>
-            <a href="{% url 'posts:update2' post.id %}" class="btn btn-primary">수정</a>
-            <a href="{% url 'posts:delete' post.id %}" class="btn btn-danger">삭제</a>
+            {% if post.author.username == session %}
+                <a href="{% url 'posts:update2' post.id %}" class="btn btn-primary">수정</a>
+                <a href="{% url 'posts:delete' post.id %}" class="btn btn-danger">삭제</a>
+            {% endif %}
             <div class="m-1"></div>
             <table class="table table-hover">
                 <thead class="thead-dark">
@@ -51,7 +53,9 @@
                         <td>{{ post.author }}</td>
 
                         <td>
-                            <a href="{% url 'posts:c_delete' post.id comment.id %}" class="btn btn-danger">삭제</a>
+                            {% if comment.author == session %}
+                                <a href="{% url 'posts:c_delete' post.id comment.id %}" class="btn btn-danger">삭제</a>
+                            {% endif %}
                         </td>
                     </tr>
                     {% endfor %}

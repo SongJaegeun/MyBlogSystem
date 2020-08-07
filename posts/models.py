@@ -1,10 +1,11 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 # Create your models here.
 
 
 class Post(models.Model):
-    author = models.CharField('작성자', max_length=20)
+    author = models.ForeignKey(User, verbose_name='작성자', on_delete=models.CASCADE)
+
     title = models.CharField('글제목', max_length=50)
     contents = models.TextField('글내용', max_length=1000)
 
